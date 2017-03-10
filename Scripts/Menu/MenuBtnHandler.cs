@@ -1,7 +1,7 @@
 ﻿using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
-public class MenuBtnHandler : MonoBehaviour, IInputHandler
+public class MenuBtnHandler : MonoBehaviour, IInputClickHandler
 {
     public MenuActions menuActions;
 
@@ -19,7 +19,7 @@ public class MenuBtnHandler : MonoBehaviour, IInputHandler
         }
     }
 
-    public void OnInputDown(InputEventData eventData)
+    public void OnInputClicked(InputClickedEventData eventData)
     {
         switch (action)
         {
@@ -29,10 +29,6 @@ public class MenuBtnHandler : MonoBehaviour, IInputHandler
             case MenuActions.Actions.Move:
                 SendMessageUpwards("Move");
                 break;
-
-            case MenuActions.Actions.Rotate:
-                SendMessageUpwards("Rotate");
-                break;
         }
 
         if (audioSrc)
@@ -40,6 +36,4 @@ public class MenuBtnHandler : MonoBehaviour, IInputHandler
             audioSrc.Play();
         }
     }
-
-    public void OnInputUp(InputEventData eventData) {}
 }

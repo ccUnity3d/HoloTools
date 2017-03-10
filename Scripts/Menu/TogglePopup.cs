@@ -21,6 +21,18 @@ public class TogglePopup : MonoBehaviour, IInputHandler
 
     public void OnInputDown(InputEventData eventData)
     {
+        Toggle();
+
+        if (audioSrc)
+        {
+            audioSrc.Play();
+        }
+    }
+
+    public void OnInputUp(InputEventData eventData) {}
+
+    public void Toggle()
+    {
         if (Popup && !IsVisible)
         {
             Popup.SetActive(true);
@@ -31,12 +43,5 @@ public class TogglePopup : MonoBehaviour, IInputHandler
             Popup.SetActive(false);
             IsVisible = false;
         }
-
-        if (audioSrc)
-        {
-            audioSrc.Play();
-        }
     }
-
-    public void OnInputUp(InputEventData eventData) {}
 }
