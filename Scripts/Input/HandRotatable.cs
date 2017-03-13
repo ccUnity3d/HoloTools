@@ -1,61 +1,86 @@
-﻿using UnityEngine;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
+
+using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 
-public class HandRotatable : MonoBehaviour, INavigationHandler
+namespace HoloTools.Unity.Input
 {
-    public bool IsEnabled = true;
-
-    public float rotationSensitivity = 10.0f;
-
-    public Transform popupMenu;
-
-    private Transform popupMenuParent;
-
-    private Vector3 manipulationPreviousPostion;
-    private float rotationFactor;
-
-    public void OnNavigationStarted(NavigationEventData eventData)
+    /// <summary>
+    /// HandRotatable component - for object rotation
+    /// </summary>
+    public class HandRotatable : MonoBehaviour,
+        INavigationHandler
     {
-        hideMenu();
-    }
+        #region Public Fields
 
-    public void OnNavigationUpdated(NavigationEventData eventData)
-    {
-        if (IsEnabled)
-        { 
-            rotationFactor = eventData.CumulativeDelta.x * rotationSensitivity;
-            transform.Rotate(new Vector3(0, -1 * rotationFactor, 0));
-        }
-    }
+        public bool IsEnabled = true;
 
-    public void OnNavigationCompleted(NavigationEventData eventData)
-    {
-        showMenu();
-    }
+        public float rotationSensitivity = 10.0f;
 
-    public void OnNavigationCanceled(NavigationEventData eventData)
-    {
-        showMenu();
-    }
+        [Tooltip("Transform of popup menu. Optional.")]
+        public Transform popupMenu;
 
-    private void hideMenu()
-    {
-        // Вкладываем меню в объект и скрываем его
-        if (IsEnabled && popupMenu)
+        #endregion
+
+        #region Private Fields
+
+        private Transform popupParent;
+
+        private Vector3 manipulationPreviousPostion;
+
+        private float rotationFactor;
+
+        #endregion
+
+        #region Events
+
+        public void OnNavigationStarted(NavigationEventData eventData)
         {
-            popupMenuParent = popupMenu.parent;
-            popupMenu.parent = transform;
-            popupMenu.gameObject.SetActive(false);
+            hideMenu();
         }
-    }
 
-    private void showMenu()
-    {
-        // достаем меню из объекта и показываем его
-        if (IsEnabled && popupMenu)
+        public void OnNavigationUpdated(NavigationEventData eventData)
         {
-            popupMenu.parent = popupMenuParent;
-            popupMenu.gameObject.SetActive(true);
+            if (IsEnabled)
+            {
+                rotationFactor = eventData.CumulativeDelta.x * rotationSensitivity;
+                transform.Rotate(new Vector3(0, -1 * rotationFactor, 0));
+            }
         }
+
+        public void OnNavigationCompleted(NavigationEventData eventData)
+        {
+            showMenu();
+        }
+
+        public void OnNavigationCanceled(NavigationEventData eventData)
+        {
+            showMenu();
+        }
+
+        #endregion
+
+        #region Utility Methods
+
+        private void hideMenu()
+        {
+            if (IsEnabled && popupMenu)
+            {
+                popupParent = popupMenu.parent;
+                popupMenu.parent = transform;
+                popupMenu.gameObject.SetActive(false);
+            }
+        }
+
+        private void showMenu()
+        {
+            if (IsEnabled && popupMenu)
+            {
+                popupMenu.parent = popupParent;
+                popupMenu.gameObject.SetActive(true);
+            }
+        }
+
+        #endregion
     }
 }

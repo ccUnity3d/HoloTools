@@ -1,26 +1,34 @@
-﻿using UnityEngine;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
 
-public class Billboard : MonoBehaviour
+using UnityEngine;
+
+namespace HoloTools.Unity.Other
 {
-    private void OnEnable()
+    /// <summary>
+    /// Billboard component - position gameobject towards to camera
+    /// </summary>
+    public class Billboard : MonoBehaviour
     {
-        Update();
-    }
-
-    private void Update()
-    {
-        if (!Camera.main)
+        private void OnEnable()
         {
-            return;
+            Update();
         }
 
-        Vector3 directionToTarget = Camera.main.transform.position - transform.position;
-
-        if (directionToTarget.sqrMagnitude < 0.001f)
+        private void Update()
         {
-            return;
-        }
+            if (!Camera.main)
+            {
+                return;
+            }
 
-        transform.rotation = Quaternion.LookRotation(-directionToTarget);
+            Vector3 directionToTarget = Camera.main.transform.position - transform.position;
+
+            if (directionToTarget.sqrMagnitude < 0.001f)
+            {
+                return;
+            }
+
+            transform.rotation = Quaternion.LookRotation(-directionToTarget);
+        }
     }
 }

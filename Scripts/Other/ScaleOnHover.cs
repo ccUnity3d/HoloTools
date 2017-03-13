@@ -1,29 +1,54 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
+
 using UnityEngine;
+using HoloToolkit.Unity.InputModule;
 
-public class ScaleOnHover : MonoBehaviour, IFocusable
+namespace HoloTools.Unity.Other
 {
-    public Mode scale = Mode.Bigger;
-
-    private Vector3 localScale;
-
-    public enum Mode { Bigger, Smaller };
-
-    public void OnFocusEnter()
+    /// <summary>
+    /// ScaleOnHover component - position gameobject towards to camera
+    /// </summary>
+    public class ScaleOnHover : MonoBehaviour,
+                            IFocusable
     {
-        localScale = transform.localScale;
+        #region Public Fields
 
-        float mod = (scale == Mode.Bigger ? 1.25f : 0.75f);
+        public enum Mode { Bigger, Smaller };
 
-        transform.localScale = new Vector3(
-            (transform.localScale.x * mod),
-            (transform.localScale.y * mod),
-            (transform.localScale.z * mod)
-        );
-    }
+        public Mode scale = Mode.Bigger;
 
-    public void OnFocusExit()
-    {
-        transform.localScale = localScale;
+        public float scaleModifier = 0.25f;
+
+        #endregion
+
+        #region Private Fields
+
+        private Vector3 localScale;
+
+        #endregion
+
+        #region Events
+
+        public void OnFocusEnter()
+        {
+            localScale = transform.localScale;
+
+            float mod = (scale == Mode.Bigger 
+                ? 1 + scaleModifier 
+                : 1 - scaleModifier);
+
+            transform.localScale = new Vector3(
+                (transform.localScale.x * mod),
+                (transform.localScale.y * mod),
+                (transform.localScale.z * mod)
+            );
+        }
+
+        public void OnFocusExit()
+        {
+            transform.localScale = localScale;
+        }
+
+        #endregion
     }
 }

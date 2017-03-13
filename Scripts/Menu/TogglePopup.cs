@@ -1,47 +1,74 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
+
 using UnityEngine;
+using HoloToolkit.Unity.InputModule;
 
-public class TogglePopup : MonoBehaviour, IInputHandler
+namespace HoloTools.Unity.Menu
 {
-    public GameObject Popup; // Ссылка на меню
-
-    private bool IsVisible = false;
-
-    private AudioSource audioSrc; // Звук клика
-
-    private void Awake()
+    public class TogglePopup : MonoBehaviour,
+                           IInputHandler
     {
-        audioSrc = GetComponent<AudioSource>();
+        #region Public Fields
 
-        if (Popup)
+        [Tooltip("Link to popup menu. Required.")]
+        public GameObject Popup;
+
+        #endregion
+
+        #region Private Fields
+
+        private bool IsVisible = false;
+
+        private AudioSource audioSrc;
+
+        #endregion
+
+        #region Main Methods
+
+        private void Awake()
         {
-            Popup.SetActive(false);
+            audioSrc = GetComponent<AudioSource>();
+
+            if (Popup)
+            {
+                Popup.SetActive(false);
+            }
         }
-    }
 
-    public void OnInputDown(InputEventData eventData)
-    {
-        Toggle();
+        #endregion
 
-        if (audioSrc)
+        #region Events
+
+        public void OnInputDown(InputEventData eventData)
         {
-            audioSrc.Play();
-        }
-    }
+            Toggle();
 
-    public void OnInputUp(InputEventData eventData) {}
+            if (audioSrc)
+            {
+                audioSrc.Play();
+            }
+        }
 
-    public void Toggle()
-    {
-        if (Popup && !IsVisible)
+        public void OnInputUp(InputEventData eventData) { }
+
+        #endregion
+
+        #region Utility Methods
+
+        public void Toggle()
         {
-            Popup.SetActive(true);
-            IsVisible = true;
+            if (Popup && !IsVisible)
+            {
+                Popup.SetActive(true);
+                IsVisible = true;
+            }
+            else if (Popup && IsVisible)
+            {
+                Popup.SetActive(false);
+                IsVisible = false;
+            }
         }
-        else if (Popup && IsVisible)
-        {
-            Popup.SetActive(false);
-            IsVisible = false;
-        }
+
+        #endregion
     }
 }

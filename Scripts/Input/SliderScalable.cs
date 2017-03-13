@@ -1,52 +1,73 @@
-﻿using UnityEngine;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
 
-public class SliderScalable : MonoBehaviour
+using UnityEngine;
+using HoloTools.Unity.Menu;
+
+namespace HoloTools.Unity.Input
 {
-    public float scaleIncrement = 0.001f;
-
-    public GameObject Slider;
-
-    public Transform Popup;
-
-    private MenuSliderHandler menuSliderHandler;
-
-    private Vector3 defaultScale;
-
-    private void Awake()
+    /// <summary>
+    /// SliderScalable component - proccess object scaling with slider
+    /// </summary>
+    public class SliderScalable : MonoBehaviour
     {
-        if (Slider)
+        #region Public Fields
+
+        [Tooltip("Slider gameobject. Required.")]
+        public GameObject Slider;
+
+        public float scaleIncrement = 0.001f;
+
+        public Transform Popup;
+
+        #endregion
+
+        #region Private Fields
+
+        private MenuSlider menuSliderHandler;
+
+        private Vector3 defaultScale;
+
+        #endregion
+
+        #region Main Methods
+
+        private void Awake()
         {
-            menuSliderHandler = Slider.GetComponent<MenuSliderHandler>();
-
-            menuSliderHandler.valueUpdated += OnValueUpdate;
-        }
-
-        defaultScale = transform.localScale;
-    }
-
-    private void OnValueUpdate()
-    {
-        if (Slider && menuSliderHandler)
-        {
-            transform.localScale = new Vector3(
-                transform.localScale.x + scaleIncrement * menuSliderHandler.Direction,
-                transform.localScale.y + scaleIncrement * menuSliderHandler.Direction,
-                transform.localScale.z + scaleIncrement * menuSliderHandler.Direction
-                );
-
-            if (menuSliderHandler.Value == 0)
+            if (Slider)
             {
-                transform.localScale = defaultScale;
+                menuSliderHandler = Slider.GetComponent<MenuSlider>();
+
+                menuSliderHandler.ValueUpdated += OnValueUpdate;
             }
 
-            // Отодвигаем меню при масштабировании
-            if (Popup)
-            {
-                Vector3 newPos = Popup.position;
-                newPos.z = newPos.z + ((scaleIncrement * -menuSliderHandler.Direction));
+            defaultScale = transform.localScale;
+        }
 
-                Popup.position = newPos;
+        private void OnValueUpdate()
+        {
+            if (Slider && menuSliderHandler)
+            {
+                transform.localScale = new Vector3(
+                    transform.localScale.x + scaleIncrement * menuSliderHandler.Direction,
+                    transform.localScale.y + scaleIncrement * menuSliderHandler.Direction,
+                    transform.localScale.z + scaleIncrement * menuSliderHandler.Direction
+                    );
+
+                if (menuSliderHandler.Value == 0)
+                {
+                    transform.localScale = defaultScale;
+                }
+
+                if (Popup)
+                {
+                    Vector3 newPos = Popup.position;
+                    newPos.z = newPos.z + ((scaleIncrement * -menuSliderHandler.Direction));
+
+                    Popup.position = newPos;
+                }
             }
         }
+
+        #endregion
     }
 }

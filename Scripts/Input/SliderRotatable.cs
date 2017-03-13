@@ -1,35 +1,57 @@
-﻿using UnityEngine;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
 
-public class SliderRotatable : MonoBehaviour
+using UnityEngine;
+using HoloTools.Unity.Menu;
+
+namespace HoloTools.Unity.Input
 {
-    public GameObject Slider;
-
-    private MenuSliderHandler menuSliderHandler;
-
-    private Quaternion defaultRotation;
-
-    private void Awake()
+    /// <summary>
+    /// SliderRotatable component - proccess object rotation with slider
+    /// </summary>
+    public class SliderRotatable : MonoBehaviour
     {
-        if (Slider)
-        {
-            menuSliderHandler = Slider.GetComponent<MenuSliderHandler>();
+        #region Public Fields
 
-            menuSliderHandler.valueUpdated += OnValueUpdate;
+        [Tooltip("Slider gameobject. Required.")]
+        public GameObject Slider;
+
+        #endregion
+
+        #region Private Fields
+
+        private MenuSlider menuSliderHandler;
+
+        private Quaternion defaultRotation;
+
+        #endregion
+
+        #region Main Methods
+
+        private void Awake()
+        {
+            if (Slider)
+            {
+                menuSliderHandler = Slider.GetComponent<MenuSlider>();
+
+                menuSliderHandler.ValueUpdated += OnValueUpdate;
+            }
+
+            defaultRotation = transform.rotation;
         }
 
-        defaultRotation = transform.rotation;
-    }
-
-    private void OnValueUpdate()
-    {
-        if (Slider && menuSliderHandler)
+        private void OnValueUpdate()
         {
-            transform.Rotate(new Vector3(0, 3.6f * menuSliderHandler.Direction, 0));
-
-            if (menuSliderHandler.Value == 0)
+            if (Slider && menuSliderHandler)
             {
-                transform.rotation = defaultRotation;
+                transform.Rotate(new Vector3(0, 3.6f * menuSliderHandler.Direction, 0));
+
+                if (menuSliderHandler.Value == 0)
+                {
+                    transform.rotation = defaultRotation;
+                }
             }
         }
+
+        #endregion
     }
 }

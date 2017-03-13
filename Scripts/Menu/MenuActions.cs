@@ -1,30 +1,52 @@
-﻿using UnityEngine;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
 
-public class MenuActions : MonoBehaviour
+using UnityEngine;
+using HoloTools.Unity.Input;
+
+namespace HoloTools.Unity.Menu
 {
-    public Transform Target; // Ссылка на объект
-
-    public enum Actions { None, Move } // Список действий
-
-    private GazeDraggable gazeDraggable;
-
-    private void Awake()
+    /// <summary>
+    /// MenuActions - collection of Methods, which called from menu components
+    /// </summary>
+    public class MenuActions : MonoBehaviour
     {
-        if (Target)
+        #region Public Fields
+
+        [Tooltip("Target gameobject. Required.")]
+        public Transform Target;
+
+        public enum Actions { None, Move }
+
+        #endregion
+
+        #region Private Fields
+
+        private HandDraggable handDraggable;
+
+        #endregion
+
+        #region Main Methods
+
+        private void Awake()
         {
-            gazeDraggable = Target.GetComponent<GazeDraggable>();
+            if (Target)
+            {
+                handDraggable = Target.GetComponent<HandDraggable>();
+            }
         }
-    }
 
-    #region Вызываемые методы
+        #endregion
 
-    public void Move()
-    {
-        if (gazeDraggable)
+        #region Actions Methods
+
+        public void Move()
         {
-            gazeDraggable.IsEnabled = !gazeDraggable.IsEnabled;
+            if (handDraggable)
+            {
+                handDraggable.IsEnabled = !handDraggable.IsEnabled;
+            }
         }
-    }
 
-    #endregion
+        #endregion
+    }
 }

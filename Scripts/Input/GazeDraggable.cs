@@ -1,64 +1,91 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
+
 using UnityEngine;
+using HoloToolkit.Unity.InputModule;
 
-public class GazeDraggable : MonoBehaviour, IInputHandler
+namespace HoloTools.Unity.Input
 {
-    public bool IsEnabled = true;
-
-    public Transform Cursor;
-    public Transform popupMenu;
-
-    private Transform popupMenuParent;
-
-    private bool IsPressed;
-
-    private Vector3 defaultPos;
-
-    public void OnInputDown(InputEventData eventData)
+    /// <summary>
+    /// Simple Input component - using cursor coordinates to move object
+    /// If you want more flexibility use HandDraggable instead
+    /// </summary>
+    public class GazeDraggable : MonoBehaviour, 
+                                 IInputHandler
     {
-        IsPressed = true;
+        #region Public Fields
 
-        defaultPos = transform.position;
+        public bool IsEnabled = true;
 
-        // Вкладываем меню в объект и скрываем его
-        if (IsEnabled && popupMenu)
+        [Tooltip("Transform of Cursor gameobject")]
+        public Transform Cursor;
+
+        [Tooltip("Transform of popup menu. Optional.")]
+        public Transform popupMenu;
+
+        #endregion
+
+        #region Private Fields
+
+        private Transform popupParent;
+
+        private bool IsPressed;
+
+        private Vector3 defaultPos;
+
+        #endregion
+
+        #region Main Methods
+
+        private void Update()
         {
-            popupMenuParent = popupMenu.parent;
-            popupMenu.parent = transform;
-            popupMenu.gameObject.SetActive(false);
+            if (Cursor && IsEnabled && IsPressed)
+            {
+                Vector3 newPos = Cursor.position;
+                newPos.z = defaultPos.z;
+
+                transform.position = newPos;
+            }
         }
 
-        if (IsEnabled)
+        #endregion
+
+        #region Events
+
+        public void OnInputDown(InputEventData eventData)
         {
-            Debug.Log("Draging Start");
+            IsPressed = true;
+
+            defaultPos = transform.position;
+
+            if (IsEnabled && popupMenu)
+            {
+                popupParent = popupMenu.parent;
+                popupMenu.parent = transform;
+                popupMenu.gameObject.SetActive(false);
+            }
+
+            if (IsEnabled)
+            {
+                Debug.Log("Draging Start");
+            }
         }
-    }
 
-    public void OnInputUp(InputEventData eventData)
-    {
-        IsPressed = false;
-
-        // достаем меню из объекта и показываем его
-        if (IsEnabled && popupMenu)
+        public void OnInputUp(InputEventData eventData)
         {
-            popupMenu.parent = popupMenuParent;
-            popupMenu.gameObject.SetActive(true);
+            IsPressed = false;
+
+            if (IsEnabled && popupMenu)
+            {
+                popupMenu.parent = popupParent;
+                popupMenu.gameObject.SetActive(true);
+            }
+
+            if (IsEnabled)
+            {
+                Debug.Log("Draging End");
+            }
         }
 
-        if (IsEnabled)
-        {
-            Debug.Log("Draging End");
-        }
-    }
-
-    private void Update()
-    {
-        if (Cursor && IsEnabled && IsPressed)
-        {
-            Vector3 newPos = Cursor.position;
-            newPos.z = defaultPos.z;
-
-            transform.position = newPos;
-        }
+        #endregion
     }
 }

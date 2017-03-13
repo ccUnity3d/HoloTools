@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 33027750390650744}
   - component: {fileID: 65472941417412156}
   - component: {fileID: 23168441898451098}
+  - component: {fileID: 114176423659351628}
   m_Layer: 0
   m_Name: 'Toddler '
   m_TagString: Untagged
@@ -165,8 +166,9 @@ GameObject:
   - component: {fileID: 33385726993336342}
   - component: {fileID: 65086148245167016}
   - component: {fileID: 23417685022692598}
+  - component: {fileID: 114042265202362258}
   m_Layer: 0
-  m_Name: 'Toddler '
+  m_Name: Toddler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1161,9 +1163,46 @@ MonoBehaviour:
   IsEnabled: 1
   Value: 0
   Direction: 1
-  Toddler: {fileID: 4700627538633612}
   Line: {fileID: 4341228888690984}
-  Cursor: {fileID: 0}
+  Toddler: {fileID: 4700627538633612}
+--- !u!114 &114042265202362258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1482291397765856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f5ed1c49059594b83a43df6d259157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEnabled: 1
+  moveAxis: 1
+  FreezeRotation: 1
+  HostTransform: {fileID: 0}
+  DistanceScale: 2
+  IsKeepUpright: 0
+  IsOrientTowardsUser: 0
+  popupMenu: {fileID: 0}
+--- !u!114 &114176423659351628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1265554843573714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f5ed1c49059594b83a43df6d259157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEnabled: 1
+  moveAxis: 2
+  FreezeRotation: 1
+  HostTransform: {fileID: 0}
+  DistanceScale: 2
+  IsKeepUpright: 0
+  IsOrientTowardsUser: 0
+  popupMenu: {fileID: 0}
 --- !u!114 &114265733367381334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1261,9 +1300,8 @@ MonoBehaviour:
   IsEnabled: 1
   Value: 0
   Direction: 1
-  Toddler: {fileID: 4296270263199418}
   Line: {fileID: 4530457827981372}
-  Cursor: {fileID: 0}
+  Toddler: {fileID: 4296270263199418}
 --- !u!114 &114677953099211232
 MonoBehaviour:
   m_ObjectHideFlags: 1
