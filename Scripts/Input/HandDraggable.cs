@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using HoloToolkit.Unity;
 using HoloToolkit.Unity.InputModule;
+using HoloTools.Unity.Menu;
 
 namespace HoloTools.Unity.Input
 {
@@ -50,6 +51,8 @@ namespace HoloTools.Unity.Input
         [Tooltip("Transform of popup menu. Optional.")]
         public Transform popupMenu;
 
+        public bool SliderToddler = false;
+
         #endregion
 
         #region Private Fields
@@ -79,6 +82,10 @@ namespace HoloTools.Unity.Input
 
         private Quaternion startRotation;
 
+        private Transform Line;
+        private MenuSlider Slider;
+        private MeshRenderer LineMeshRend;
+
         #endregion
 
         #region Main Methods
@@ -91,6 +98,13 @@ namespace HoloTools.Unity.Input
             }
 
             mainCamera = Camera.main;
+
+            if (SliderToddler)
+            {
+                Line = HostTransform.parent;
+                Slider = Line.parent.GetComponent<MenuSlider>();
+                LineMeshRend = Line.GetComponent<MeshRenderer>();
+            }
         }
 
         private void OnDestroy()
@@ -253,7 +267,36 @@ namespace HoloTools.Unity.Input
                     break;
             }
 
-            HostTransform.position = finalPosition;
+            // if range by x is not defined
+            if (!SliderToddler)
+            {
+                HostTransform.position = finalPosition;
+            }
+            else if (Slider.sliderType == MenuSlider.SliderType.Horizontal)
+            {
+                float minX = LineMeshRend.bounds.min.x;
+                float maxX = LineMeshRend.bounds.min.x + LineMeshRend.bounds.size.x;
+
+                if (finalPosition.x >= minX
+                    && finalPosition.x <= maxX)
+                {
+                    HostTransform.position = finalPosition;
+                }
+            }
+            else if (Slider.sliderType == MenuSlider.SliderType.Vertical)
+            {
+                float minY = LineMeshRend.bounds.min.y;
+                float maxY = LineMeshRend.bounds.min.y + LineMeshRend.bounds.size.y;
+
+                Debug.Log(finalPosition);
+
+                if (finalPosition.y >= minY
+                    && finalPosition.y <= maxY)
+                {
+                    HostTransform.position = finalPosition;
+                }
+            }
+
             HostTransform.rotation = !FreezeRotation 
                 ? draggingRotation 
                 : startRotation;

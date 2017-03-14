@@ -15,9 +15,7 @@ namespace HoloTools.Unity.Input
         [Tooltip("Slider gameobject. Required.")]
         public GameObject Slider;
 
-        public float scaleIncrement = 0.001f;
-
-        public Transform Popup;
+        public float scaleIncrement = 1f;
 
         #endregion
 
@@ -47,23 +45,17 @@ namespace HoloTools.Unity.Input
         {
             if (Slider && menuSliderHandler)
             {
+                float scaleIncNew = scaleIncrement / 1000;
+
                 transform.localScale = new Vector3(
-                    transform.localScale.x + scaleIncrement * menuSliderHandler.Direction,
-                    transform.localScale.y + scaleIncrement * menuSliderHandler.Direction,
-                    transform.localScale.z + scaleIncrement * menuSliderHandler.Direction
+                    transform.localScale.x + scaleIncNew * menuSliderHandler.Direction,
+                    transform.localScale.y + scaleIncNew * menuSliderHandler.Direction,
+                    transform.localScale.z + scaleIncNew * menuSliderHandler.Direction
                     );
 
                 if (menuSliderHandler.Value == 0)
                 {
                     transform.localScale = defaultScale;
-                }
-
-                if (Popup)
-                {
-                    Vector3 newPos = Popup.position;
-                    newPos.z = newPos.z + ((scaleIncrement * -menuSliderHandler.Direction));
-
-                    Popup.position = newPos;
                 }
             }
         }

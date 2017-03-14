@@ -9,13 +9,15 @@ namespace HoloTools.Unity.Menu
     /// <summary>
     /// MenuCheckbox - slider handler
     /// </summary>
-    public class MenuSlider : MonoBehaviour,
-                          IInputHandler,
-                          IFocusable
+    public class MenuSlider : MonoBehaviour
     {
         #region Public Fields
 
         public bool IsEnabled = true;
+
+        public enum SliderType { Horizontal, Vertical };
+
+        public SliderType sliderType = SliderType.Horizontal;
 
         public float Value = 0;
         public int Direction = 1;
@@ -35,8 +37,6 @@ namespace HoloTools.Unity.Menu
         private float maxPos = 0;
         private float oldVal = 0;
 
-        private bool IsPressed = false;
-
         #endregion
 
         #region Main Methods
@@ -45,11 +45,13 @@ namespace HoloTools.Unity.Menu
         {
             minPos = Toddler.localPosition.x;
             maxPos = -minPos;
+
+            defaultPos = Toddler.localPosition;
         }
 
         private void Update()
         {
-            if (IsEnabled && Toddler && IsPressed)
+            if (IsEnabled && Toddler)
             {
                 Vector3 newPos = Toddler.localPosition;
 
@@ -76,29 +78,6 @@ namespace HoloTools.Unity.Menu
                     }
                 }
             }
-        }
-
-        #endregion
-
-        #region Events
-
-        public void OnInputDown(InputEventData eventData)
-        {
-            IsPressed = true;
-
-            defaultPos = Toddler.localPosition;
-        }
-
-        public void OnInputUp(InputEventData eventData)
-        {
-            IsPressed = false;
-        }
-
-        public void OnFocusEnter() { }
-
-        public void OnFocusExit()
-        {
-            IsPressed = false;
         }
 
         #endregion
