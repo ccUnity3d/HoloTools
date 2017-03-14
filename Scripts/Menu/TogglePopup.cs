@@ -2,16 +2,19 @@
 
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
+using System;
 
 namespace HoloTools.Unity.Menu
 {
     public class TogglePopup : MonoBehaviour,
-                           IInputHandler
+                           IInputClickHandler
     {
         #region Public Fields
 
         [Tooltip("Link to popup menu. Required.")]
         public GameObject Popup;
+
+        public bool clickSound = true;
 
         #endregion
 
@@ -39,17 +42,15 @@ namespace HoloTools.Unity.Menu
 
         #region Events
 
-        public void OnInputDown(InputEventData eventData)
+        public void OnInputClicked(InputClickedEventData eventData)
         {
             Toggle();
 
-            if (audioSrc)
+            if (clickSound && audioSrc)
             {
                 audioSrc.Play();
             }
         }
-
-        public void OnInputUp(InputEventData eventData) { }
 
         #endregion
 

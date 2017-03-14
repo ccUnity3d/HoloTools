@@ -19,7 +19,7 @@ namespace HoloTools.Unity.Input
 
         #region Private Fields
 
-        private MenuSlider menuSliderHandler;
+        private MenuSlider menuSlider;
 
         private Quaternion defaultRotation;
 
@@ -31,21 +31,21 @@ namespace HoloTools.Unity.Input
         {
             if (Slider)
             {
-                menuSliderHandler = Slider.GetComponent<MenuSlider>();
+                menuSlider = Slider.GetComponent<MenuSlider>();
 
-                menuSliderHandler.ValueUpdated += OnValueUpdate;
+                menuSlider.OnValueChanged += OnValueChanged;
             }
 
             defaultRotation = transform.rotation;
         }
 
-        private void OnValueUpdate()
+        private void OnValueChanged()
         {
-            if (Slider && menuSliderHandler)
+            if (Slider && menuSlider)
             {
-                transform.Rotate(new Vector3(0, 3.6f * menuSliderHandler.Direction, 0));
+                transform.Rotate(new Vector3(0, 3.6f * menuSlider.Direction, 0));
 
-                if (menuSliderHandler.Value == 0)
+                if (menuSlider.Value == 0)
                 {
                     transform.rotation = defaultRotation;
                 }

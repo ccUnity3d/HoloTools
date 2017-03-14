@@ -18,6 +18,8 @@ namespace HoloTools.Unity.Menu
 
         public MenuActions.Actions action = MenuActions.Actions.None;
 
+        public bool clickSound = true;
+
         #endregion
 
         #region Private Fields
@@ -46,7 +48,7 @@ namespace HoloTools.Unity.Menu
         {
             SendMessageUpwards(action.ToString());
 
-            if (audioSrc)
+            if (clickSound && audioSrc)
             {
                 audioSrc.Play();
             }

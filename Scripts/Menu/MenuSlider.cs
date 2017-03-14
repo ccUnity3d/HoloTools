@@ -25,7 +25,7 @@ namespace HoloTools.Unity.Menu
         public Transform Line;
         public Transform Toddler;
 
-        public Action ValueUpdated;
+        public Action OnValueChanged;
 
         #endregion
 
@@ -71,9 +71,9 @@ namespace HoloTools.Unity.Menu
                         Direction = Value > oldVal ? 1 : -1;
                         oldVal = Value;
 
-                        if (ValueUpdated != null)
+                        if (OnValueChanged != null)
                         {
-                            ValueUpdated();
+                            OnValueChanged();
                         }
                     }
                 }

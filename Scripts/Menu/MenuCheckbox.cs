@@ -1,5 +1,6 @@
 ﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
 
+using System;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 
@@ -13,10 +14,16 @@ namespace HoloTools.Unity.Menu
     {
         #region Public Fields
 
+        public Action OnValueChanged;
+
         public bool Checked = true;
 
         [Tooltip("Checkbox dot. Required.")]
         public GameObject Dot;
+
+        public MenuActions.Actions action = MenuActions.Actions.None;
+
+        public bool clickSound = true;
 
         #endregion
 
@@ -46,12 +53,19 @@ namespace HoloTools.Unity.Menu
         {
             Checked = !Checked;
 
+            SendMessageUpwards(action.ToString());
+
+            if (OnValueChanged != null)
+            {
+                OnValueChanged();
+            }
+
             if (Dot)
             {
                 Dot.SetActive(Checked);
             }
 
-            if (audioSrc)
+            if (clickSound && audioSrc)
             {
                 audioSrc.Play();
             }

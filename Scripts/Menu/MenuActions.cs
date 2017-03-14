@@ -15,7 +15,7 @@ namespace HoloTools.Unity.Menu
         [Tooltip("Target gameobject. Required.")]
         public Transform Target;
 
-        public enum Actions { None, Move }
+        public enum Actions { None, Move, Visible }
 
         #endregion
 
@@ -39,12 +39,19 @@ namespace HoloTools.Unity.Menu
 
         #region Actions Methods
 
+        public void None() { }
+
         public void Move()
         {
             if (handDraggable)
             {
                 handDraggable.IsEnabled = !handDraggable.IsEnabled;
             }
+        }
+
+        public void Visible()
+        {
+            Target.gameObject.SetActive(!Target.gameObject.activeSelf);
         }
 
         #endregion

@@ -35,13 +35,13 @@ namespace HoloTools.Unity.Input
             {
                 menuSliderHandler = Slider.GetComponent<MenuSlider>();
 
-                menuSliderHandler.ValueUpdated += OnValueUpdate;
+                menuSliderHandler.OnValueChanged += OnValueChanged;
             }
 
             defaultScale = transform.localScale;
         }
 
-        private void OnValueUpdate()
+        private void OnValueChanged()
         {
             if (Slider && menuSliderHandler)
             {
