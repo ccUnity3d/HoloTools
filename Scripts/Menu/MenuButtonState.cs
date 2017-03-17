@@ -22,41 +22,29 @@ namespace HoloTools.Unity.Menu
         public Material HoverState;
         public Material ActiveState;
 
+        [Tooltip("Popup menu link. Optional.")]
+        public GameObject Popup;
+
+        [HideInInspector]
+        public MeshRenderer meshRend;
+
         #endregion
 
         #region Private Fields
 
-        private MeshRenderer _meshRend;
-
-        private MenuButtonState[] _buttonStates;
+        private MenuButtonState[] buttonStates;
 
         #endregion
 
-        #region Private Properties
+        #region Main Methods
 
-        public MeshRenderer MeshRend
+        private void Awake()
         {
-            get
+            meshRend = GetComponent<MeshRenderer>();
+
+            if (Popup)
             {
-                if (!_meshRend)
-                {
-                    _meshRend = GetComponent<MeshRenderer>();
-                }
-
-                return _meshRend;
-            }
-        }
-
-        public MenuButtonState[] ButtonStates
-        {
-            get
-            {
-                if (_buttonStates == null || _buttonStates.Length == 0)
-                {
-                    _buttonStates = transform.parent.GetComponentsInChildren<MenuButtonState>();
-                }
-
-                return _buttonStates;
+                buttonStates = Popup.GetComponentsInChildren<MenuButtonState>();
             }
         }
 
@@ -73,12 +61,14 @@ namespace HoloTools.Unity.Menu
 
         public void OnFocusEnter()
         {
-            SetFocus(true);
+            IsFocus = true;
+            SetFocus(IsFocus);
         }
 
         public void OnFocusExit()
         {
-            SetFocus(false);
+            IsFocus = false;
+            SetFocus(IsFocus);
         }
 
         #endregion
@@ -90,31 +80,30 @@ namespace HoloTools.Unity.Menu
             // before continue return all Buttons state to normal
             DisableSelection();
 
-            if (MeshRend && ActiveState && NormalState)
+            if (meshRend && ActiveState && NormalState)
             {
-                MeshRend.sharedMaterial = active ? ActiveState : NormalState;
-                IsActive = active;
+                meshRend.sharedMaterial = active ? ActiveState : NormalState;
             }
         }
 
         public void SetFocus(bool active)
         {
-            if (!IsActive && MeshRend && HoverState && NormalState)
+            if (!IsActive && meshRend && HoverState && NormalState)
             {
-                MeshRend.sharedMaterial = active ? HoverState : NormalState;
+                meshRend.sharedMaterial = active ? HoverState : NormalState;
             }
-
-            IsFocus = active;
         }
 
         private void DisableSelection()
         {
-            foreach (MenuButtonState state in ButtonStates)
+            if (Popup)
             {
-                if (state.MeshRend)
+                foreach (MenuButtonState state in buttonStates)
                 {
-                    state.MeshRend.sharedMaterial = state.NormalState;
-                    state.IsActive = false;
+                    if (state.meshRend)
+                    {
+                        state.meshRend.sharedMaterial = state.NormalState;
+                    }
                 }
             }
         }

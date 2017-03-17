@@ -5,16 +5,10 @@ using UnityEngine;
 namespace HoloTools.Unity.Other
 {
     /// <summary>
-    /// Billboard component - positioning gameobject towards to camera
+    /// Billboard component - position gameobject towards to camera
     /// </summary>
     public class Billboard : MonoBehaviour
     {
-        #region Public Fields
-
-        public bool DisableXAxis = true;
-
-        #endregion
-
         private void OnEnable()
         {
             Update();
@@ -35,11 +29,6 @@ namespace HoloTools.Unity.Other
             }
 
             transform.rotation = Quaternion.LookRotation(-directionToTarget);
-
-            if (DisableXAxis)
-            {
-                transform.rotation = Quaternion.Euler(0, transform.rotation.y, transform.rotation.z);
-            }
         }
     }
 }

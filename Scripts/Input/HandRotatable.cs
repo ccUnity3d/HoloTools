@@ -17,9 +17,16 @@ namespace HoloTools.Unity.Input
 
         public float rotationSensitivity = 10.0f;
 
+        [Tooltip("Transform of popup menu. Optional.")]
+        public Transform popupMenu;
+
         #endregion
 
         #region Private Fields
+
+        private Transform popupParent;
+
+        private Vector3 manipulationPreviousPostion;
 
         private float rotationFactor;
 
@@ -27,7 +34,10 @@ namespace HoloTools.Unity.Input
 
         #region Events
 
-        public void OnNavigationStarted(NavigationEventData eventData) { }
+        public void OnNavigationStarted(NavigationEventData eventData)
+        {
+            hideMenu();
+        }
 
         public void OnNavigationUpdated(NavigationEventData eventData)
         {
@@ -38,9 +48,38 @@ namespace HoloTools.Unity.Input
             }
         }
 
-        public void OnNavigationCompleted(NavigationEventData eventData) { }
+        public void OnNavigationCompleted(NavigationEventData eventData)
+        {
+            showMenu();
+        }
 
-        public void OnNavigationCanceled(NavigationEventData eventData) { }
+        public void OnNavigationCanceled(NavigationEventData eventData)
+        {
+            showMenu();
+        }
+
+        #endregion
+
+        #region Utility Methods
+
+        private void hideMenu()
+        {
+            if (IsEnabled && popupMenu)
+            {
+                popupParent = popupMenu.parent;
+                popupMenu.parent = transform;
+                popupMenu.gameObject.SetActive(false);
+            }
+        }
+
+        private void showMenu()
+        {
+            if (IsEnabled && popupMenu)
+            {
+                popupMenu.parent = popupParent;
+                popupMenu.gameObject.SetActive(true);
+            }
+        }
 
         #endregion
     }
