@@ -30,7 +30,7 @@ namespace HoloTools.Unity.Input
 
         public bool IsEnabled = true;
 
-        public enum MoveAxis { XY, X, Y };
+        public enum MoveAxis { XYZ, X, Y };
 
         public MoveAxis moveAxis;
 
