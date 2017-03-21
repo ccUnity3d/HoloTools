@@ -1,12 +1,12 @@
 ﻿// Copyright (c) HoloGroup (http://holo.group). All rights reserved.
 
-using HoloToolkit.Unity.InputModule;
 using UnityEngine;
+using HoloToolkit.Unity.InputModule;
 
 namespace HoloTools.Unity.Input
 {
     public class HandScalable : MonoBehaviour,
-        INavigationHandler
+                                IManipulationHandler
     {
         #region Public Fields
 
@@ -24,25 +24,22 @@ namespace HoloTools.Unity.Input
 
         #region Events
 
-        public void OnNavigationStarted(NavigationEventData eventData) { }
+        public void OnManipulationStarted(ManipulationEventData eventData) { }
 
-        public void OnNavigationUpdated(NavigationEventData eventData)
+        public void OnManipulationUpdated(ManipulationEventData eventData)
         {
             if (IsEnabled)
             {
                 scaleFactor = eventData.CumulativeDelta.x * sensitivity;
-                
-                transform.localScale = new Vector3((transform.localScale.x + (-1 * scaleFactor)),
-                    (transform.localScale.y + (-1 * scaleFactor)),
-                    (transform.localScale.z + (-1 * scaleFactor)));
 
-                //transform.Rotate(new Vector3(0, -1 * scaleFactor, 0));
+                transform.localScale = new Vector3(transform.localScale.x + scaleFactor,
+                    transform.localScale.y + scaleFactor, transform.localScale.z + scaleFactor);
             }
         }
 
-        public void OnNavigationCompleted(NavigationEventData eventData) { }
+        public void OnManipulationCompleted(ManipulationEventData eventData) { }
 
-        public void OnNavigationCanceled(NavigationEventData eventData) { }
+        public void OnManipulationCanceled(ManipulationEventData eventData) { }
 
         #endregion
     }

@@ -6,15 +6,12 @@ using UnityEngine.UI;
 using HoloToolkit.Unity.InputModule;
 
 public class ImageButtonState : MonoBehaviour,
-                                IFocusable,
                                 IInputClickHandler
 {
     #region Public Fields
 
     public bool Active = false;
-    public bool Focus = false;
 
-    public Color OnHover;
     public Color OnActive;
 
     #endregion
@@ -75,31 +72,9 @@ public class ImageButtonState : MonoBehaviour,
         SetActive(Active);
     }
 
-    public void OnFocusEnter()
-    {
-        SetFocus(true);
-    }
-
-    public void OnFocusExit()
-    {
-        SetFocus(false);
-    }
-
     #endregion
 
     #region Utility Methods
-
-    public void SetFocus(bool active)
-    {
-        if (!Active)
-        {
-            DisableSelection();
-
-            Image.color = active ? OnHover : _normalColor;
-        }
-
-        Focus = active;
-    }
 
     public void SetActive(bool active)
     {
@@ -122,7 +97,6 @@ public class ImageButtonState : MonoBehaviour,
             {
                 state.Image.color = _normalColor;
                 state.Active = false;
-                state.Focus = false;
             }
         }
     }

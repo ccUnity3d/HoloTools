@@ -16,7 +16,7 @@ namespace HoloTools.Unity.Menu
         [Tooltip("Target gameobject. Required.")]
         public Transform Target;
 
-        public enum Actions { None, Move, Rotate, Scale, Visible, OpenMenu, CloseMenu }
+        public enum Actions { None, Move, Rotate, Scale, Visible, OpenMenu, CloseMenu, ChangeColor, AboutUs }
 
         #endregion
 
@@ -26,15 +26,24 @@ namespace HoloTools.Unity.Menu
         private HandRotatable _handRotatable;
         private HandScalable _handScalable;
 
-        private AudioSource _audioSrc;
-
-        private HideSelf _container;
-
-        private Transform _floatingButton;
+        private MenuWindow _menuWindow;
 
         #endregion
 
         #region Private Properties
+
+        private MenuWindow MenuWindow
+        {
+            get
+            {
+                if (!_menuWindow)
+                {
+                    _menuWindow = GetComponent<MenuWindow>();
+                }
+
+                return _menuWindow;
+            }
+        }
 
         private HandDraggable HandDraggable
         {
@@ -72,57 +81,6 @@ namespace HoloTools.Unity.Menu
                 }
 
                 return _handScalable;
-            }
-        }
-
-        private AudioSource AudioSrc
-        {
-            get
-            {
-                if (!_audioSrc)
-                {
-                    _audioSrc = GetComponent<AudioSource>();
-                }
-
-                return _audioSrc;
-            }
-        }
-
-        private HideSelf Container
-        {
-            get
-            {
-                if (!_container)
-                {
-                    _container = GetComponentInChildren<HideSelf>();
-                }
-
-                return _container;
-            }
-        }
-
-        private bool Active
-        {
-            get
-            {
-                return Container.Active;
-            }
-            set
-            {
-                Container.Active = value;
-            }
-        }
-
-        private Transform FloatingButton
-        {
-            get
-            {
-                if (!_floatingButton)
-                {
-                    _floatingButton = transform.FindChild("FloatingButton");
-                }
-
-                return _floatingButton;
             }
         }
 
@@ -183,16 +141,34 @@ namespace HoloTools.Unity.Menu
 
         public void OpenMenu()
         {
-            Active = true;
-
-            FloatingButton.gameObject.SetActive(false);
+            MenuWindow.Open();
         }
 
         public void CloseMenu()
         {
-            Active = false;
+            MenuWindow.Close();
+        }
 
-            FloatingButton.gameObject.SetActive(true);
+        public void ChangeColor()
+        {
+            // just for test
+            Color[] colorChoices = new Color[] { Color.green, Color.red, Color.yellow, Color.magenta, Color.gray };
+
+            var meshRend = Target.GetComponent<MeshRenderer>();
+
+            var tempMat = meshRend.material;
+            tempMat.color = colorChoices[Random.Range(0, (colorChoices.Length))];
+            meshRend.material = tempMat;
+        }
+
+        public void AboutUs()
+        {
+            var aboutUs = MenuWindow.GetChild("AboutUs");
+
+            if (aboutUs != null)
+            {
+                aboutUs.Open();
+            }
         }
 
         #endregion
@@ -201,10 +177,7 @@ namespace HoloTools.Unity.Menu
 
         public void ClickSound()
         {
-            if (AudioSrc)
-            {
-                AudioSrc.Play();
-            }
+            MenuWindow.ClickSound();
         }
 
         #endregion
