@@ -11,6 +11,8 @@ namespace HoloTools.Unity.Other
         
         public bool active = true;
 
+        public string ItemTag = "";
+
         #endregion
 
         #region Public Properties

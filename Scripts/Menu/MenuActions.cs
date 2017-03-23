@@ -16,7 +16,7 @@ namespace HoloTools.Unity.Menu
         [Tooltip("Target gameobject. Required.")]
         public Transform Target;
 
-        public enum Actions { None, Move, Rotate, Scale, Visible, OpenMenu, CloseMenu, ChangeColor, AboutUs }
+        public enum Actions { None, Move, Rotate, Scale, Visible, OpenMenu, CloseMenu, ChangeColor, AboutUs, Settings }
 
         #endregion
 
@@ -168,6 +168,16 @@ namespace HoloTools.Unity.Menu
             if (aboutUs != null)
             {
                 aboutUs.Open();
+            }
+        }
+
+        public void Settings()
+        {
+            var settings = MenuWindow.GetChild("Settings");
+
+            if (settings != null)
+            {
+                settings.Open();
             }
         }
 

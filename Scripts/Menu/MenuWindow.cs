@@ -19,19 +19,12 @@ namespace HoloTools.Unity.Menu
 
         #region Private Fields
 
-        private Sprite _icon;
-
-        private string _title;
-
         private HideSelf _container;
 
         private Transform _floatingButton;
 
         private AudioSource _audioSrc;
 
-        #endregion
-
-        #region Public Properties
 
         #endregion
 
