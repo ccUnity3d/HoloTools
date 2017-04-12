@@ -1,0 +1,119 @@
+fileFormatVersion: 2
+guid: 503d84f88ee42694badd63d5fb131aed
+timeCreated: 1490361972
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cell_cover
+    100002: //RootNode
+    100004: Desmosomes
+    100006: Endoplasmatic_reticulum
+    100008: Mithochondrion
+    100010: NAME
+    100012: Nucleus
+    100014: STAND
+    100016: Vesicles
+    400000: Cell_cover
+    400002: //RootNode
+    400004: Desmosomes
+    400006: Endoplasmatic_reticulum
+    400008: Mithochondrion
+    400010: NAME
+    400012: Nucleus
+    400014: STAND
+    400016: Vesicles
+    2300000: Cell_cover
+    2300002: Desmosomes
+    2300004: Endoplasmatic_reticulum
+    2300006: Mithochondrion
+    2300008: NAME
+    2300010: Nucleus
+    2300012: STAND
+    2300014: Vesicles
+    3300000: Cell_cover
+    3300002: Desmosomes
+    3300004: Endoplasmatic_reticulum
+    3300006: Mithochondrion
+    3300008: NAME
+    3300010: Nucleus
+    3300012: STAND
+    3300014: Vesicles
+    4300000: NAME
+    4300002: STAND
+    4300004: Cell_cover
+    4300006: Nucleus
+    4300008: Mithochondrion
+    4300010: Vesicles
+    4300012: Endoplasmatic_reticulum
+    4300014: Desmosomes
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
